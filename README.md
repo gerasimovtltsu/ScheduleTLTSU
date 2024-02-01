@@ -26,6 +26,12 @@
 java -jar ScheduleTLTSU.jar
 ```
 
+или
+
+```cmd
+javac ScheduleApp.java
+```
+
 ## Используемые внешние зависимости
 [org.json](http://stleary.github.io/JSON-java/index.html)
 
