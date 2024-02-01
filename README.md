@@ -29,6 +29,10 @@ java -jar ScheduleTLTSU.jar
 ## Используемые внешние зависимости
 [org.json](http://stleary.github.io/JSON-java/index.html)
 
+## Скриншоты
+![image](https://github.com/gerasimovtltsu/ScheduleTLTSU/assets/82588219/7e15c027-0249-4ef3-93b2-b74acdc35f4b)
+
+
 ## Лицензия
 
 Проект распространяется под лицензией MIT.
