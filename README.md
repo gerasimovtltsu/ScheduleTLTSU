@@ -38,7 +38,8 @@ javac ScheduleApp.java
 [launch4j](https://launch4j.sourceforge.net/)
 
 ## Скриншоты
-![image](https://github.com/gerasimovtltsu/ScheduleTLTSU/assets/82588219/7e15c027-0249-4ef3-93b2-b74acdc35f4b)
+![image](https://github.com/gerasimovtltsu/ScheduleTLTSU/assets/82588219/6a5d9a28-31c9-4568-a026-4d544384fc06)
+
 
 
 ## Лицензия
