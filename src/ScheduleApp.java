@@ -21,6 +21,7 @@ public class ScheduleApp extends JFrame {
         setTitle("Расписание ТГУ Тольятти");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
         teachersComboBox = new JComboBox<>(new Vector<>());
         JPanel northPanel = new JPanel();
@@ -37,7 +38,7 @@ public class ScheduleApp extends JFrame {
         controlPanel.add(nextWeekBtn);
         controlPanel.add(loadScheduleBtn);
 
-        // Table for the schedule
+        // Таблица для расписания
         scheduleTable = new JTable();
         JScrollPane scrollPane = new JScrollPane(scheduleTable);
         scheduleTable.setFillsViewportHeight(true);
@@ -51,9 +52,12 @@ public class ScheduleApp extends JFrame {
 
         pack();
 
+        // беру половину от экрана, чтобы окно было по центру
+        setSize(screenSize.width / 2, screenSize.height / 2);
+        setLocationRelativeTo(null);
         setVisible(true);
 
-        // вешаем на кнопки эвенты по загрузке расписания
+        // вешаю на кнопки эвенты по загрузке расписания
         loadScheduleBtn.addActionListener(e -> loadScheduleForSelectedTeacher());
         prevWeekBtn.addActionListener(e -> moveToPreviousWeek());
         nextWeekBtn.addActionListener(e -> moveToNextWeek());
@@ -84,14 +88,6 @@ public class ScheduleApp extends JFrame {
 
         LoadTeachers loadTeachers = new LoadTeachers(listener);
         new Thread(loadTeachers).start();
-    }
-
-    private String getStartDateStr() {
-        return currentStartOfWeek.atStartOfDay(ZoneId.of("UTC")).format(DateTimeFormatter.ISO_INSTANT);
-    }
-
-    private String getEndDateStr() {
-        return currentEndOfWeek.atStartOfDay(ZoneId.of("UTC")).plusDays(1).minusSeconds(1).format(DateTimeFormatter.ISO_INSTANT);
     }
 
     private void loadTeacherSchedule(int teacherId, String startDateStr, String endDateStr) {
@@ -128,26 +124,32 @@ public class ScheduleApp extends JFrame {
             loadTeacherSchedule(teacherId, startDateStr, endDateStr);
         } else {
             JOptionPane.showMessageDialog(ScheduleApp.this,
-                    "Please select a teacher.",
-                    "No Teacher Selected", JOptionPane.WARNING_MESSAGE);
+                    "Пожалуйста, выберите преподавателя",
+                    "Преподаватель не выбран", JOptionPane.WARNING_MESSAGE);
         }
     }
 
     private void updateScheduleTable(ScheduleData scheduleData) {
         List<ScheduleEntry> scheduleEntries = scheduleData.getEntries();
 
-        String[] columns = new String[] { "Дисциплина", "Дата", "Время начала", "Время окончания" };
+        String[] columns = new String[] { "Дисциплина", "Дата", "Тип занятия", "Время начала", "Время окончания" };
         Object[][] data = new Object[scheduleEntries.size()][columns.length];
 
         for (int i = 0; i < scheduleEntries.size(); i++) {
             ScheduleEntry entry = scheduleEntries.get(i);
             data[i][0] = entry.getDisciplineName();
             data[i][1] = entry.getDate();
-            data[i][2] = entry.getFromTime();
-            data[i][3] = entry.getToTime();
+            data[i][2] = entry.getLessonType();
+            data[i][3] = entry.getFromTime();
+            data[i][4] = entry.getToTime();
         }
 
-        scheduleTable.setModel(new DefaultTableModel(data, columns));
+        scheduleTable.setModel(new DefaultTableModel(data, columns) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        });
     }
 
     private void setCurrentWeek(LocalDate date) {
@@ -176,9 +178,20 @@ public class ScheduleApp extends JFrame {
         setCurrentWeek(currentStartOfWeek.plusWeeks(1));
     }
 
-
-
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(ScheduleApp::new);
+        try {
+            // заставляем Swing перенимать интерфейс от API ОС
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Запуск GUI
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new ScheduleApp();
+            }
+        });
     }
 }

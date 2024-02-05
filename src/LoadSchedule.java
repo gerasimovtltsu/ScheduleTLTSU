@@ -5,7 +5,6 @@ import org.json.JSONObject;
 import java.io.*;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +13,6 @@ public class LoadSchedule implements Runnable {
     private final int teacherId;
     private final String startDateStr;
     private final String endDateStr;
-    DateTimeFormatter formatter = DateTimeFormatter.ISO_INSTANT;
 
     public LoadSchedule(ScheduleLoadListener listener, int teacherId, String startDateStr, String endDateStr) {
         this.listener = listener;
@@ -50,10 +48,11 @@ public class LoadSchedule implements Runnable {
 
             String disciplineName = jsonObject.getString("disciplineName");
             String date = jsonObject.getString("date");
+            String lessonType = jsonObject.getString("type");
             String fromTime = jsonObject.getString("fromTime");
             String toTime = jsonObject.getString("toTime");
 
-            ScheduleEntry entry = new ScheduleEntry(disciplineName, date, fromTime, toTime); // Create a ScheduleEntry object
+            ScheduleEntry entry = new ScheduleEntry(disciplineName, date, lessonType, fromTime, toTime); // Create a ScheduleEntry object
             entries.add(entry); // Add to list
         }
         return new ScheduleData(entries); // Assuming ScheduleData has a constructor that takes a List<ScheduleEntry>
