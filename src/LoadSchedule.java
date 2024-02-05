@@ -53,9 +53,9 @@ public class LoadSchedule implements Runnable {
             String toTime = jsonObject.getString("toTime");
 
             ScheduleEntry entry = new ScheduleEntry(disciplineName, date, lessonType, fromTime, toTime); // Create a ScheduleEntry object
-            entries.add(entry); // Add to list
+            entries.add(entry);
         }
-        return new ScheduleData(entries); // Assuming ScheduleData has a constructor that takes a List<ScheduleEntry>
+        return new ScheduleData(entries);
     }
 
     private static String readAll(Reader rd) throws IOException {
