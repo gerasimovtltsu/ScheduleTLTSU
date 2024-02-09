@@ -23,31 +23,36 @@ public class ScheduleApp extends JFrame {
         setLayout(new BorderLayout());
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
+        // Создаем панель с менеджером компоновки BorderLayout
+        JPanel topPanel = new JPanel(new BorderLayout());
+
+
         teachersComboBox = new JComboBox<>(new Vector<>());
-        JPanel northPanel = new JPanel();
-        northPanel.add(new JLabel("Преподаватель: "));
-        northPanel.add(teachersComboBox);
+        JPanel teacherSelectionPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        teacherSelectionPanel.add(new JLabel("Преподаватель: "));
+        teacherSelectionPanel.add(teachersComboBox);
+        topPanel.add(teacherSelectionPanel, BorderLayout.NORTH);
 
-        add(northPanel, BorderLayout.NORTH);
+        add(topPanel, BorderLayout.NORTH);
 
-        JPanel controlPanel = new JPanel();
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JButton prevWeekBtn = new JButton("Пред. неделя");
         JButton nextWeekBtn = new JButton("След. неделя");
         JButton loadScheduleBtn = new JButton("Загрузить расписание");
-        controlPanel.add(prevWeekBtn);
-        controlPanel.add(nextWeekBtn);
-        controlPanel.add(loadScheduleBtn);
+        buttonPanel.add(prevWeekBtn);
+        buttonPanel.add(nextWeekBtn);
+        buttonPanel.add(loadScheduleBtn);
+        topPanel.add(buttonPanel, BorderLayout.SOUTH);
 
         // Таблица для расписания
         scheduleTable = new JTable();
         JScrollPane scrollPane = new JScrollPane(scheduleTable);
         scheduleTable.setFillsViewportHeight(true);
 
-        add(controlPanel, BorderLayout.CENTER);
-        add(scrollPane, BorderLayout.SOUTH);
+        add(topPanel, BorderLayout.NORTH);
+        add(scrollPane, BorderLayout.CENTER);
 
         setCurrentWeek(LocalDate.now());
-
         loadTeachersData();
 
         pack();
@@ -187,11 +192,6 @@ public class ScheduleApp extends JFrame {
         }
 
         // Запуск GUI
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new ScheduleApp();
-            }
-        });
+        SwingUtilities.invokeLater(() -> new ScheduleApp());
     }
 }
