@@ -7,7 +7,7 @@
 ## Используемый стек
 
 - Язык программирования: Java
-- Версия Java: OpenJDK 21
+- Версия Java: [OpenJDK 21](https://openjdk.org/projects/jdk/21/)
 - Графическая библиотека: Swing
 
 ## API
