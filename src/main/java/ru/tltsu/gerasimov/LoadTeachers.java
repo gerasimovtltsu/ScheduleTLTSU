@@ -1,3 +1,6 @@
+package ru.tltsu.gerasimov;
+
+import lombok.AllArgsConstructor;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -8,13 +11,10 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
-
+@AllArgsConstructor
 public class LoadTeachers implements Runnable {
-    private final TeacherLoadListener listener;
 
-    public LoadTeachers(TeacherLoadListener listener) {
-        this.listener = listener;
-    }
+    private final TeacherLoadListener listener;
 
     @Override
     public void run() {

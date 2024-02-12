@@ -1,26 +1,27 @@
+package ru.tltsu.gerasimov;
+
+import lombok.AllArgsConstructor;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
+@AllArgsConstructor
 public class LoadSchedule implements Runnable {
+
     private final ScheduleLoadListener listener;
     private final int teacherId;
     private final String startDateStr;
     private final String endDateStr;
-
-
-    public LoadSchedule(ScheduleLoadListener listener, int teacherId, String startDateStr, String endDateStr) {
-        this.listener = listener;
-        this.teacherId = teacherId;
-        this.startDateStr = startDateStr;
-        this.endDateStr = endDateStr;
-    }
 
     @Override
     public void run() {
@@ -53,7 +54,7 @@ public class LoadSchedule implements Runnable {
             String fromTime = jsonObject.getString("fromTime");
             String toTime = jsonObject.getString("toTime");
 
-            ScheduleEntry entry = new ScheduleEntry(disciplineName, date, lessonType, fromTime, toTime); // Create a ScheduleEntry object
+            ScheduleEntry entry = new ScheduleEntry(disciplineName, date, lessonType, fromTime, toTime); // Create a ru.tltsu.gerasimov.ScheduleEntry object
             entries.add(entry);
         }
         return new ScheduleData(entries);

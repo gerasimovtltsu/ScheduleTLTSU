@@ -1,3 +1,5 @@
+package ru.tltsu.gerasimov;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -6,10 +8,14 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
+import java.util.Comparator;
 import java.util.List;
-import java.util.*;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.Vector;
 
 public class ScheduleApp extends JFrame {
+
     private final JComboBox<String> teachersComboBox;
     private Map<String, Integer> teacherMap = new TreeMap<>();
     private final JTable scheduleTable;

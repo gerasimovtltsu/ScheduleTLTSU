@@ -1,3 +1,5 @@
+package ru.tltsu.gerasimov;
+
 import java.util.Map;
 
 public interface TeacherLoadListener  {
