@@ -5,6 +5,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
@@ -143,16 +144,15 @@ public class ScheduleApp extends JFrame {
     private void updateScheduleTable(ScheduleData scheduleData) {
         List<ScheduleEntry> scheduleEntries = scheduleData.getEntries();
 
-        String[] columns = new String[] { "Дисциплина", "Дата", "Тип занятия", "Время начала", "Время окончания" };
+        String[] columns = new String[] { "Дисциплина", "Тип занятия", "Время начала", "Время окончания" };
         Object[][] data = new Object[scheduleEntries.size()][columns.length];
 
         for (int i = 0; i < scheduleEntries.size(); i++) {
             ScheduleEntry entry = scheduleEntries.get(i);
             data[i][0] = entry.getDisciplineName();
-            data[i][1] = entry.getDate();
-            data[i][2] = entry.getLessonType();
-            data[i][3] = entry.getFromTime();
-            data[i][4] = entry.getToTime();
+            data[i][1] = entry.getLessonType();
+            data[i][2] = parseDate(entry.getFromTime());
+            data[i][3] = parseDate(entry.getToTime());
         }
 
         scheduleTable.setModel(new DefaultTableModel(data, columns) {
@@ -199,5 +199,11 @@ public class ScheduleApp extends JFrame {
 
         // Запуск GUI
         SwingUtilities.invokeLater(() -> new ScheduleApp());
+    }
+
+    private String parseDate(String dateToParse) {
+        LocalDateTime dateTime = LocalDateTime.parse(dateToParse, DateTimeFormatter.ISO_DATE_TIME);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy-HH:mm");
+        return dateTime.format(formatter);
     }
 }

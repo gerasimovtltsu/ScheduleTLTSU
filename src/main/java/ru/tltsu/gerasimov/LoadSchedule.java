@@ -49,12 +49,11 @@ public class LoadSchedule implements Runnable {
             JSONObject jsonObject = jsonArray.getJSONObject(i);
 
             String disciplineName = jsonObject.getString("disciplineName");
-            String date = jsonObject.getString("date");
             String lessonType = jsonObject.getString("type");
             String fromTime = jsonObject.getString("fromTime");
             String toTime = jsonObject.getString("toTime");
 
-            ScheduleEntry entry = new ScheduleEntry(disciplineName, date, lessonType, fromTime, toTime); // Create a ru.tltsu.gerasimov.ScheduleEntry object
+            ScheduleEntry entry = new ScheduleEntry(disciplineName, lessonType, fromTime, toTime); // Create a ru.tltsu.gerasimov.ScheduleEntry object
             entries.add(entry);
         }
         return new ScheduleData(entries);
