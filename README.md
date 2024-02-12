@@ -29,7 +29,7 @@ java -jar ScheduleTLTSU.jar
 или
 
 ```cmd
-javac ScheduleApp.java
+javac ru.tltsu.gerasimov.ScheduleApp.java
 ```
 
 ## Используемые внешние зависимости
